@@ -16,14 +16,14 @@ use App\Http\Controllers\Auth\AuthController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::group(['middleware' => 'auth'], function(){
-    Route::get('welcome', [Controller::class, 'index'])->name('home');
+Route::group(['middleware' => 'auth', 'prefix' => 'the-universe'], function(){
+    Route::get('/', [Controller::class, 'index'])->name('home');
     Route::get('posts', [PostController::class, 'index'])->name('posts.index');
     Route::post('create-new-posts', [PostController::class, 'store'])->name('posts.store');
+    Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
 });
 
 Route::get('create-post', [PostController::class, 'create'])->name('posts.create');
-Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
 Route::post('save-to-draft', [PostController::class, 'draft'])->name('post.draft');
 Route::get('register', [AuthController::class, 'index'])->name('register');
 Route::post('signup', [AuthController::class, 'signup'])->name('signup');
@@ -32,4 +32,3 @@ Route::get('signin', [AuthController::class, 'signin'])->name('signin');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

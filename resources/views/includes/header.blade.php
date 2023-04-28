@@ -38,7 +38,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">References</h6>
                 <a class="collapse-item" href="{{route('posts.index')}}">All Posts</a>
-                <a class="collapse-item" href="buttons.html">Categories</a>
+                <a class="collapse-item" href="{{route('categories.index')}}">Categories</a>
                 <a class="collapse-item" href="cards.html">Meta</a>
                 <a class="collapse-item" href="cards.html">Comments</a>
             </div>

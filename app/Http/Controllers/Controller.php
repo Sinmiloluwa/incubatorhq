@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+use App\Models\Post;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class Controller extends BaseController
 {
@@ -12,6 +13,7 @@ class Controller extends BaseController
 
     public function index()
     {
-        return view('welcome');
+        $posts = Post::latest('page_views')->get();
+        return view('welcome', compact('posts'));
     }
 }
