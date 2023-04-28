@@ -10,6 +10,8 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['categories'];
+
     const News_And_Development = 1;
 
     const Music_And_Lifestyle = 2;

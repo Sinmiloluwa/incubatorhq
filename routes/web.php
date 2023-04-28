@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\AuthController;
 
 /*
@@ -21,6 +22,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'the-universe'], function(){
     Route::get('posts', [PostController::class, 'index'])->name('posts.index');
     Route::post('create-new-posts', [PostController::class, 'store'])->name('posts.store');
     Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('category/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::post('category/{id}', [CategoryController::class, 'update'])->name('category.update');
+    Route::delete('category/{id}', [CategoryController::class, 'edit'])->name('category.delete');
 });
 
 Route::get('create-post', [PostController::class, 'create'])->name('posts.create');
