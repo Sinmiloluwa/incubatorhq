@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Traits;
+namespace App\Traits;
 
 use App\Exceptions\ValidationResponseException;
 use Exception;
@@ -15,7 +15,9 @@ trait ResponseTrait
     /**
      * Return a successful ok HTTP response
      *
+     * @param  string  $message
      * @param  null  $data
+     * @return JsonResponse
      */
     public function okResponse(string $message, $data = null): JsonResponse
     {
@@ -24,6 +26,10 @@ trait ResponseTrait
 
     /**
      * Return a successful created HTTP response
+     *
+     * @param  string  $message
+     * @param $data
+     * @return JsonResponse
      */
     public function createdResponse(string $message, $data = null): JsonResponse
     {
@@ -32,6 +38,8 @@ trait ResponseTrait
 
     /**
      * Return a successful no content HTTP response
+     *
+     * @return JsonResponse
      */
     public function noContentResponse(): JsonResponse
     {
@@ -40,6 +48,11 @@ trait ResponseTrait
 
     /**
      * Return a generic successful HTTP response
+     *
+     * @param  string  $message
+     * @param $data
+     * @param  int  $status
+     * @return JsonResponse
      */
     public function successResponse(string $message, $data = null, int $status = 200): JsonResponse
     {
@@ -48,6 +61,10 @@ trait ResponseTrait
 
     /**
      * Return a validation error response
+     *
+     * @param  Validator  $validator
+     * @param  Request|null  $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function validationErrorResponse(Validator $validator, Request $request = null): \Symfony\Component\HttpFoundation\Response
     {
@@ -57,6 +74,9 @@ trait ResponseTrait
 
     /**
      * Return an unauthenticated HTTP error response
+     *
+     * @param  string  $message
+     * @return JsonResponse
      */
     public function unauthenticatedResponse(string $message): JsonResponse
     {
@@ -65,6 +85,10 @@ trait ResponseTrait
 
     /**
      * Return a bad request HTTP error response
+     *
+     * @param  string  $message
+     * @param  array|null  $error
+     * @return JsonResponse
      */
     public function badRequestResponse(string $message, array $error = null): JsonResponse
     {
@@ -73,6 +97,10 @@ trait ResponseTrait
 
     /**
      * Return a forbidden HTTP error response
+     *
+     * @param  string  $message
+     * @param  array|null  $error
+     * @return JsonResponse
      */
     public function forbiddenResponse(string $message, array $error = null): JsonResponse
     {
@@ -82,7 +110,9 @@ trait ResponseTrait
     /**
      * Return a not found HTTP error response
      *
+     * @param  string  $message
      * @param  null  $error
+     * @return JsonResponse
      */
     public function notFoundResponse(string $message, $error = null): JsonResponse
     {
@@ -92,7 +122,10 @@ trait ResponseTrait
     /**
      * Return a generic client HTTP error response
      *
+     * @param  string  $message
+     * @param  int  $status
      * @param  null  $error
+     * @return JsonResponse
      */
     public function clientErrorResponse(string $message, int $status = 400, $error = null): JsonResponse
     {
@@ -101,6 +134,11 @@ trait ResponseTrait
 
     /**
      * Return a generic server HTTP error response
+     *
+     * @param  string  $string
+     * @param  int  $status
+     * @param  Exception|null  $exception
+     * @return JsonResponse
      */
     public function serverErrorResponse(string $string, int $status = 503, Exception $exception = null): JsonResponse
     {
@@ -119,7 +157,10 @@ trait ResponseTrait
     /**
      * Return a generic HTTP response
      *
+     * @param  string  $message
+     * @param  int  $status
      * @param  null  $data
+     * @return JsonResponse
      */
     public function jsonResponse(string $message, int $status, $data = null): JsonResponse
     {
@@ -139,6 +180,9 @@ trait ResponseTrait
 
     /**
      * Determine if a  HTTP status code indicates success
+     *
+     * @param  int  $status
+     * @return bool
      */
     public function isStatusCodeSuccessful(int $status): bool
     {

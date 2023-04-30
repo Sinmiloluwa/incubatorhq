@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-body">
-    <form class="user" method="POST" action="{{route('posts.store')}}">
+    <form class="user" method="POST" action="{{route('posts.store')}}" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <input type="text" class="form-control form-control"
@@ -33,6 +33,11 @@
                 <option value="{{$category->id}}">{{$category->categories}}</option>
             @endforeach
         </select>
+
+        <div class="mb-3 mt-3">
+            <label for="formFile" class="form-label">Default file input example</label>
+            <input class="form-control" type="file" id="formFile" name="featured_image">
+          </div>
         <div class="form-group py-3">
         <button class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm" type="submit">Drafts</button>
         <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" type="submit"> Publish</button>

@@ -19,11 +19,17 @@ class Post extends Model
         'author_id',
         'published_at',
         'category_id',
-        'published'
+        'published',
+        'featured_image_path'
     ];
 
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 }

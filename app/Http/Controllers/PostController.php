@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Category;
+use App\Traits\ImageTrait;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
+    use ImageTrait;
     /**
      * Display a listing of the resource.
      */
@@ -42,12 +44,16 @@ class PostController extends Controller
             'slug' => 'required',
             'summary' => 'required',
             'content' => 'required',
-            'category' => 'required'
+            'category' => 'required',
+            'featured_image' => 'required'
         ]);
 
         if($validator->fails()){
             return response($validator->messages(), 200);
         }
+
+        $image = $this->verifyAndUpload($request, 'featured_image', 'featured_image');
+
 
         $posts = Post::create([
             'title' => $request->title,
@@ -58,8 +64,10 @@ class PostController extends Controller
             'category_id' => $request->category,
             'published' => true,
             'author_id' => Auth::id(),
-            'published_at' => Carbon::now()
+            'published_at' => Carbon::now(),
+            'featured_image_path' => $image
         ]);
+
 
         return redirect()->route('posts.index')->with('message', 'Article has been created');
     }
