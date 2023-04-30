@@ -50,7 +50,7 @@ class AuthController extends Controller
 
         session(['user' => $user['name']]);
 
-        return redirect()->to('welcome')->with(['user' => $user]);
+        return redirect()->to('signin')->with(['user' => $user]);
     }
 
     public function login(Request $request)
