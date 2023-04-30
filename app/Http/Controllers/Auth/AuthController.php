@@ -66,7 +66,7 @@ class AuthController extends Controller
 
 
         if (auth()->attempt(request()->only(['email', 'password']))) {
-            return redirect('welcome');
+            return redirect()->route('home');
         }
 
         return Redirect::back()->withErrors(['user' => 'Invalid Credentials']);

@@ -31,7 +31,7 @@ Route::get('create-post', [PostController::class, 'create'])->name('posts.create
 Route::post('save-to-draft', [PostController::class, 'draft'])->name('post.draft');
 Route::get('signup', [AuthController::class, 'index'])->name('admin.signup');
 Route::post('signup', [AuthController::class, 'signup'])->name('signup');
-Route::post('login', [AuthController::class, 'login'])->name('login');
+Route::post('signin', [AuthController::class, 'login'])->name('admin.login');
 Route::get('signin', [AuthController::class, 'signin'])->name('signin');
 
 Auth::routes();
