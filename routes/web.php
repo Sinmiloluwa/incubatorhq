@@ -24,7 +24,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'the-universe'], function(){
     Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('category/{id}', [CategoryController::class, 'edit'])->name('category.edit');
     Route::post('category/{id}', [CategoryController::class, 'update'])->name('category.update');
-    Route::delete('category/{id}', [CategoryController::class, 'edit'])->name('category.delete');
+    Route::delete('category/{id}', [CategoryController::class, 'destroy'])->name('category.delete');
+    Route::get('post/{id}', [PostController::class, 'edit'])->name('post.edit');
+    Route::post('post/{post}', [PostController::class, 'update'])->name('post.update');
+    Route::delete('post/{post}', [PostController::class, 'destroy'])->name('post.delete');
+    Route::post('logout', [AuthController::class, 'logout'])->name('admin.logout');
 });
 
 Route::get('create-post', [PostController::class, 'create'])->name('posts.create');

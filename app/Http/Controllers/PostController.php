@@ -8,6 +8,7 @@ use App\Traits\ImageTrait;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\RecentlyDeletedPost;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -49,7 +50,7 @@ class PostController extends Controller
         ]);
 
         if($validator->fails()){
-            return response($validator->messages(), 200);
+            return back()->withInput()->withErrors(['message' =>'Please input all fields']);
         }
 
         $image = $this->verifyAndUpload($request, 'featured_image', 'featured_image');
@@ -83,9 +84,11 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit($id)
     {
-        //
+        $post = Post::where('id', $id)->first();
+        $categories = Category::all();
+        return view('pages.posts.edit', compact('post','categories'));
     }
 
     /**
@@ -93,7 +96,20 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        if ($request->hasFile('featured_image')) {
+            $image = $this->verifyAndUpload($request, 'featured_image', 'featured_image');
+        }
+
+        $post->update([
+            'categories' => $request->categories,
+            'title' => $request->title,
+            'meta_tittle' => $request->meta_title,
+            'slug' => $request->slug,
+            'summary' => $request->summary,
+            'featured_image' => $image ?? $post->featured_image_path
+        ]);
+
+        return redirect()->route('posts.index')->with('success', 'Article has been updated');
     }
 
     /**
@@ -101,7 +117,22 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        RecentlyDeletedPost::create([
+            'title' => $post->title,
+            'meta_title' => $post->meta_title,
+            'slug' => $post->slug,
+            'summary' => $post->summary,
+            'content' => $post->content,
+            'category_id' => $post->category_id,
+            'published' => $post->published,
+            'author_id' => $post->author_id,
+            'published_at' => $post->published_at,
+            'featured_image_path' => $post->featured_image_path
+        ]);
+
+        $post->delete();
+
+        return redirect()->route('posts.index')->with('success', 'Article has been deleted');
     }
 
     public function draft(Request $request)

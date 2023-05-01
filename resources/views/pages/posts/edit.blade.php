@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-body">
-    <form class="user" method="POST" action="{{route('posts.store')}}" enctype="multipart/form-data">
+    <form class="user" method="POST" action="{{route('post.update', $post->id)}}" enctype="multipart/form-data">
         @csrf
         @if (session('errors'))
             <small class="text-sm text-center text-danger">{{session('errors')->first('message')}}</small>
@@ -11,26 +11,26 @@
         <div class="form-group">
             <input type="text" class="form-control form-control"
                 id="exampleInputEmail" aria-describedby="emailHelp"
-                placeholder="Post Title" name="title" value="{{old('title')}}">
+                placeholder="Post Title" name="title" value="{{$post->title}}">
         </div>
         <div class="form-group">
             <input type="text" class="form-control form-control"
-                id="exampleInputPassword" placeholder="Meta Title" name="meta_title" value="{{old('meta_title')}}">
+                id="exampleInputPassword" placeholder="Meta Title" name="meta_title" value="{{$post->meta_title}}">
         </div>
         <div class="form-group">
             <input type="text" class="form-control form-control"
-                id="exampleInputPassword" placeholder="Slug" name="slug" value="{{old('slug')}}">
+                id="exampleInputPassword" placeholder="Slug" name="slug" value="{{$post->slug}}">
         </div>
         <div class="form-group">
-            <x-forms.tinymce-editor/>
+            <textarea id="myeditorinstance" name="content">{{$post->content}}</textarea>
         </div>
         <div class="form-group">
             <input type="text" class="form-control form-control"
-                id="exampleInputPassword" placeholder="Summary" name="summary" value="{{old('summary')}}">
+                id="exampleInputPassword" placeholder="Summary" name="summary" value="{{$post->summary}}">
         </div>
 
         <label for="cars">Categories:</label>
-        <select id="cars" name="category" class="form-control form-control" name="category" value="{{old('category')}}">
+        <select id="cars" name="category" class="form-control form-control" name="category" value="{{$post->category}}">
             @foreach ($categories as $category)
                 <option value="{{$category->id}}">{{$category->categories}}</option>
             @endforeach
