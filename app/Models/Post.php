@@ -20,7 +20,8 @@ class Post extends Model
         'published_at',
         'category_id',
         'published',
-        'featured_image_path'
+        'featured_image_path',
+        'post_id'
     ];
 
     public function author(): BelongsTo

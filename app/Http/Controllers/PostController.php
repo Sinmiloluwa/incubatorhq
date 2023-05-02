@@ -21,7 +21,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::where('published', true)->get();
         return view('pages.posts.posts', compact('posts'));
     }
 
@@ -66,7 +66,8 @@ class PostController extends Controller
             'published' => true,
             'author_id' => Auth::id(),
             'published_at' => Carbon::now(),
-            'featured_image_path' => $image
+            'featured_image_path' => $image,
+            'post_id' => uniqid('incub')
         ]);
 
 
@@ -127,7 +128,8 @@ class PostController extends Controller
             'published' => $post->published,
             'author_id' => $post->author_id,
             'published_at' => $post->published_at,
-            'featured_image_path' => $post->featured_image_path
+            'featured_image_path' => $post->featured_image_path,
+            'post_id' => uniqid('incub')
         ]);
 
         $post->delete();
@@ -152,9 +154,61 @@ class PostController extends Controller
             'slug' => $request->slug,
             'summary' => $request->summary,
             'content' => $request->content,
-            'category_id' => $request->category
+            'category_id' => $request->category,
+            'post_id' => uniqid('incub')
         ]);
 
         return back();
+    }
+
+    public function drafts()
+    {
+        $posts = Post::where('published', false)->get();
+        return view('pages.drafts.index', compact('posts'));
+    }
+    
+    public function updateDraft(Post $post)
+    {
+        $post->update([
+            'published' => true
+        ]);
+
+        return redirect()->route('posts.draft')->with('success', 'Article has been published');
+    }
+
+    public function recentlyDeleted()
+    {
+        $posts = RecentlyDeletedPost::all();
+        return view('pages.posts.recently-deleted', compact('posts'));
+    }
+
+    public function restoreDeleted(RecentlyDeletedPost $post)
+    {
+        $restorePost = Post::insert([
+            'title' => $post->title,
+            'meta_title' => $post->meta_title,
+            'slug' => $post->slug,
+            'summary' => $post->summary,
+            'content' => $post->content,
+            'category_id' => $post->category_id,
+            'published' => $post->published,
+            'author_id' => $post->author_id,
+            'published_at' => $post->published_at,
+            'featured_image_path' => $post->featured_image_path,
+            'post_id' => $post->post_id
+        ]);
+        $post->delete();
+
+        return redirect()->route('posts.deleted')->with('success', 'Article has been restored');
+    }
+
+    public function upload(Request $request)
+    {
+        $path = $request->file('file')->store('uploads', 'public');
+        return response()->json(['location'=>config('services.env_url.url')."/storage/$path"]);
+        
+        /*$imgpath = request()->file('file')->store('uploads', 'public'); 
+        return response()->json(['location' => "/storage/$imgpath"]);*/
+
     }
 }

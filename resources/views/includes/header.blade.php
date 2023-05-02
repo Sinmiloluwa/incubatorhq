@@ -39,7 +39,7 @@
                 <h6 class="collapse-header">References</h6>
                 <a class="collapse-item" href="{{route('posts.index')}}">All Posts</a>
                 <a class="collapse-item" href="{{route('categories.index')}}">Categories</a>
-                <a class="collapse-item" href="cards.html">Drafts</a>
+                <a class="collapse-item" href="{{route('posts.draft')}}">Drafts</a>
                 <a class="collapse-item" href="cards.html">Comments</a>
             </div>
         </div>
@@ -95,7 +95,7 @@
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="{{route('posts.deleted')}}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Recently Deleted Posts</span></a>
     </li>

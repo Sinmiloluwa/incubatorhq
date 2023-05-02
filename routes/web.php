@@ -29,9 +29,13 @@ Route::group(['middleware' => 'auth', 'prefix' => 'the-universe'], function(){
     Route::post('post/{post}', [PostController::class, 'update'])->name('post.update');
     Route::delete('post/{post}', [PostController::class, 'destroy'])->name('post.delete');
     Route::post('logout', [AuthController::class, 'logout'])->name('admin.logout');
+    Route::get('drafts', [PostController::class, 'drafts'])->name('posts.draft');
+    Route::post('update-draft/{post}', [PostController::class, 'updateDraft'])->name('update.draft');
+    Route::get('recently-deleted-posts', [PostController::class, 'recentlyDeleted'])->name('posts.deleted');
+    Route::post('restore-deleted/{post}', [PostController::class, 'restoreDeleted'])->name('post.restore');
+    Route::post('upload', [PostController::class, 'upload'])->name('image.upload');
+    Route::get('create-post', [PostController::class, 'create'])->name('posts.create');
 });
-
-Route::get('create-post', [PostController::class, 'create'])->name('posts.create');
 Route::post('save-to-draft', [PostController::class, 'draft'])->name('post.draft');
 Route::get('signup', [AuthController::class, 'index'])->name('admin.signup');
 Route::post('signup', [AuthController::class, 'signup'])->name('signup');

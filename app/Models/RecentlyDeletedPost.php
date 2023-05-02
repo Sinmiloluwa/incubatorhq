@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RecentlyDeletedPost extends Model
 {
@@ -19,6 +20,12 @@ class RecentlyDeletedPost extends Model
         'published_at',
         'category_id',
         'published',
-        'featured_image_path'
+        'featured_image_path',
+        'post_id'
     ];
+
+    public function author(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'author_id');
+    }
 }
