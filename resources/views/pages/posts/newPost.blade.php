@@ -35,10 +35,14 @@
                 <option value="{{$category->id}}">{{$category->categories}}</option>
             @endforeach
         </select>
-
-        <div class="mb-3 mt-3">
-            <label for="formFile" class="form-label">Default file input example</label>
+          <div class="mb-3 mt-3">
+            <label for="feature" class="form-label">Feature Image</label>
             <input class="form-control" type="file" id="formFile" name="featured_image">
+          </div>
+          <hr>
+          <div class="mb-3 mt-3 form-check">
+            <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="feature">
+            <label class="form-check-label" for="flexSwitchCheckChecked">Feature Post</label>
           </div>
         <div class="form-group py-3">
         <button class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm" type="submit">Drafts</button>

@@ -21,7 +21,8 @@ class Post extends Model
         'category_id',
         'published',
         'featured_image_path',
-        'post_id'
+        'post_id',
+        'feature'
     ];
 
     public function author(): BelongsTo

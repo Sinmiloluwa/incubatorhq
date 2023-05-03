@@ -22,3 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('posts', [PostController::class, 'index']);
 Route::get('recent-articles', [PostController::class, 'recentArticles']);
+Route::get('hero-featured-posts', [PostController::class, 'featurePostHero']);
+Route::get('all-featured-posts', [PostController::class, 'getAllFeaturedPosts']);

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\Post;
+use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PostResource;
 
 class PostController extends Controller
 {
+    use ResponseTrait;
     /**
      * Display a listing of the resource.
      */
@@ -54,5 +56,17 @@ class PostController extends Controller
     {
         $posts = Post::orderBy('created_at', 'desc')->take(9)->get();
         return PostResource::collection($posts);
+    }
+
+    public function featurePostHero()
+    {
+        $featuredPost = Post::where('feature', true)->orderBy('created_at', 'desc')->take(4)->get();
+        return PostResource::collection($featuredPost);
+    }
+
+    public function getAllFeaturedPosts()
+    {
+        $featuredPosts = Post::where('feature', true)->orderBy('created_at', 'desc')->get();
+        return PostResource::collection($featuredPosts);
     }
 }

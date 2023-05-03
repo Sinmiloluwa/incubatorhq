@@ -67,7 +67,8 @@ class PostController extends Controller
             'author_id' => Auth::id(),
             'published_at' => Carbon::now(),
             'featured_image_path' => $image,
-            'post_id' => uniqid('incub')
+            'post_id' => uniqid('incub'),
+            'feature' => $request->feature == 'on' ? 1 : 0
         ]);
 
 
