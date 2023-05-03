@@ -4,8 +4,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\User\PostController as UserPostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +37,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'the-universe'], function(){
     Route::post('restore-deleted/{post}', [PostController::class, 'restoreDeleted'])->name('post.restore');
     Route::post('upload', [PostController::class, 'upload'])->name('image.upload');
     Route::get('create-post', [PostController::class, 'create'])->name('posts.create');
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::post('revoke-user/{user}', [UserController::class, 'revokeUser'])->name('user.revoke');
 });
 Route::post('save-to-draft', [PostController::class, 'draft'])->name('post.draft');
 Route::get('signup', [AuthController::class, 'index'])->name('admin.signup');
