@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\UserRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -58,10 +59,12 @@ class AuthController extends Controller
             'name' => $request->username
         ]);
 
+        $role = Role::where('id',1)->first();
+
         if (in_array($request->email, $emails)) {
-            UserRole::create([
+            DB::table('users_roles')->insert([
                 'user_id' => $user->id,
-                'role_id' => Role::SUPER_ADMIN
+                'role_id' => $role->id
             ]);
         }
 
