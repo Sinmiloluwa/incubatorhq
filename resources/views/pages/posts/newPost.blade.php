@@ -22,7 +22,7 @@
                 id="exampleInputPassword" placeholder="Slug" name="slug" value="{{old('slug')}}">
         </div>
         <div class="form-group">
-            <x-forms.tinymce-editor/>
+            <textarea id="myeditorinstance" name="content"></textarea>
         </div>
         <div class="form-group">
             <input type="text" class="form-control form-control"
@@ -45,8 +45,8 @@
             <label class="form-check-label" for="flexSwitchCheckChecked">Feature Post</label>
           </div>
         <div class="form-group py-3">
-        <button class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm" type="submit">Drafts</button>
-        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" type="submit"> Publish</button>
+        <button class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm" type="submit" name="draft">Drafts</button>
+        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" type="submit"> Preview</button>
         </div>
     </form>
         </div>

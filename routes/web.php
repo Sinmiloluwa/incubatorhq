@@ -7,6 +7,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\PostPreviewController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\User\PostController as UserPostController;
 
 /*
@@ -39,6 +41,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'the-universe'], function(){
     Route::get('create-post', [PostController::class, 'create'])->name('posts.create');
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::post('revoke-user/{user}', [UserController::class, 'revokeUser'])->name('user.revoke');
+    Route::get('preview/{post}', [PostController::class, 'preview'])->name('display');
+    Route::post('preview', [PostPreviewController::class, 'store'])->name('post.preview');
+    Route::get('publish/{post}', [PostController::class, 'publish'])->name('post.publish');
+    Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
+    Route::get('create-roles-new-ones', [PermissionController::class,'Permission']);
 });
 Route::post('save-to-draft', [PostController::class, 'draft'])->name('post.draft');
 Route::get('signup', [AuthController::class, 'index'])->name('admin.signup');

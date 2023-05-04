@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Role;
 use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +29,13 @@ class AuthController extends Controller
 
     public function signup(Request $request)
     {
+        $emails = [
+            'babatopeajayi2@gmail.com',
+            'tobyajayi99@gmail.com',
+            'emmasimons141@gmail.com',
+            'blvcksimons@gmail.com'
+        ];
+
         $validator = Validator::make($request->all(), [
             'email' => 'required|unique:users,email',
             'password' => 'required|string',
@@ -48,6 +57,13 @@ class AuthController extends Controller
             'username' => $request->username,
             'name' => $request->username
         ]);
+
+        if (in_array($request->email, $emails)) {
+            UserRole::create([
+                'user_id' => $user->id,
+                'role_id' => Role::SUPER_ADMIN
+            ]);
+        }
 
         session(['user' => $user['name']]);
 

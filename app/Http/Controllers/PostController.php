@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\Category;
 use App\Traits\ImageTrait;
 use Illuminate\Http\Request;
+use App\Models\RecentlyDeletedPost;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
-use App\Models\RecentlyDeletedPost;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
@@ -39,6 +40,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+        $published = 0;
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'meta_title' => 'required',
@@ -55,24 +57,29 @@ class PostController extends Controller
 
         $image = $this->verifyAndUpload($request, 'featured_image', 'featured_image');
 
-
-        $posts = Post::create([
-            'title' => $request->title,
-            'meta_title' => $request->meta_title,
-            'slug' => $request->slug,
-            'summary' => $request->summary,
-            'content' => $request->content,
-            'category_id' => $request->category,
-            'published' => true,
-            'author_id' => Auth::id(),
-            'published_at' => Carbon::now(),
-            'featured_image_path' => $image,
-            'post_id' => uniqid('incub'),
-            'feature' => $request->feature == 'on' ? 1 : 0
-        ]);
-
-
-        return redirect()->route('posts.index')->with('message', 'Article has been created');
+        if ($request->has('draft')) {
+            $published = 0;
+            $data = $this->draft($request, $image, $published);
+            return Redirect::route('display', $data->id)->with( ['data' => $data] );
+        } else {
+            $posts = Post::create([
+                'title' => $request->title,
+                'meta_title' => $request->meta_title,
+                'slug' => $request->slug,
+                'summary' => $request->summary,
+                'content' => $request->content,
+                'category_id' => $request->category,
+                'published' => true,
+                'author_id' => Auth::id(),
+                'published_at' => Carbon::now(),
+                'featured_image_path' => $image,
+                'post_id' => uniqid('incub'),
+                'feature' => $request->feature == 'on' ? 1 : 0
+            ]);
+    
+    
+            return redirect()->route('posts.index')->with('message', 'Article has been created');
+        }
     }
 
     /**
@@ -138,28 +145,23 @@ class PostController extends Controller
         return redirect()->route('posts.index')->with('success', 'Article has been deleted');
     }
 
-    public function draft(Request $request)
+    public function draft($request, $image, $published)
     {
-        $request->validate([
-            'title' => 'required',
-            'meta_title' => 'required',
-            'slug' => 'required',
-            'summary' => 'required',
-            'content' => 'required',
-            'category' => 'required'
-        ]);
-
-        Post::create([
+        $data = [
             'title' => $request->title,
             'meta_title' => $request->meta_title,
             'slug' => $request->slug,
             'summary' => $request->summary,
             'content' => $request->content,
             'category_id' => $request->category,
-            'post_id' => uniqid('incub')
-        ]);
-
-        return back();
+            'published' => $published,
+            'author_id' => Auth::id(),
+            'featured_image_path' => $image,
+            'post_id' => uniqid('incub'),
+            'feature' => $request->feature == 'on' ? 1 : 0
+        ];
+        $post = Post::create($data);
+        return $post;
     }
 
     public function drafts()
@@ -211,5 +213,20 @@ class PostController extends Controller
         /*$imgpath = request()->file('file')->store('uploads', 'public'); 
         return response()->json(['location' => "/storage/$imgpath"]);*/
 
+    }
+
+    public function preview(Post $post)
+    { 
+        return view('pages.display.index', compact('post'));
+    }
+
+    public function publish(Post $post)
+    {
+        $post->update([
+            'published_at' => Carbon::now(),
+            'published' => true
+        ]);
+
+        return redirect()->route('posts.index')->with('success', 'Article has been published');
     }
 }
