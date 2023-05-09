@@ -4,11 +4,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PostPreviewController;
-use App\Http\Controllers\RoleController;
 use App\Http\Controllers\User\PostController as UserPostController;
 
 /*
@@ -45,7 +46,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'the-universe'], function(){
     Route::post('preview', [PostPreviewController::class, 'store'])->name('post.preview');
     Route::get('publish/{post}', [PostController::class, 'publish'])->name('post.publish');
     Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
-    Route::get('create-roles-new-ones', [PermissionController::class,'Permission']);
+    Route::post('detach/{user}', [RoleController::class, 'detachUser'])->name('user.detach');
+    Route::post('attach/{role}', [RoleController::class, 'attachUser'])->name('user.attach');
 });
 Route::post('save-to-draft', [PostController::class, 'draft'])->name('post.draft');
 Route::get('signup', [AuthController::class, 'index'])->name('admin.signup');

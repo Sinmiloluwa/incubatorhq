@@ -101,7 +101,7 @@
     </li>
 
     <!-- Nav Item - Tables -->
-    <li class="nav-item">
+    <li class="nav-item {{ (request()->is('the-universe/roles')) ? 'active' : ''}}">
         <a class="nav-link" href="{{route('roles.index')}}">
             <i class="fas fa-fw fa-table"></i>
             <span>Roles</span></a>

@@ -23,6 +23,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::where('published', true)->get();
+        $pageViewPost = Post::where('published', true)->orderBy('page_views', 'desc')->take(10)->get();
         return view('pages.posts.posts', compact('posts'));
     }
 

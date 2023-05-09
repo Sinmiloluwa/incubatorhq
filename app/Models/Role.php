@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Role extends Model
 {
@@ -19,5 +20,11 @@ class Role extends Model
      
      public function users() {
         return $this->belongsToMany(User::class,'users_roles');    
+     }
+
+     public function getRoleUser($id)
+     {
+        $user = DB::table('users_roles')->where('role_id',1)->value('user_id');
+        return $user;
      }
 }

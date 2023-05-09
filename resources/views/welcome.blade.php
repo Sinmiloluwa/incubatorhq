@@ -4,6 +4,7 @@
     @php
         $allPosts = \App\Models\Post::all();
         $users = \App\Models\User::all();
+        $pageViewPosts = \App\Models\Post::where('published', true)->orderBy('page_views', 'desc')->take(5)->get();
         $progressBar = [];
     @endphp
     <!-- Earnings (Monthly) Card Example -->
@@ -95,10 +96,10 @@
         <!-- Project Card Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Page Views</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Top Page Views</h6>
             </div>
             <div class="card-body">
-                @foreach ($posts as $post)
+                @foreach ($pageViewPosts as $post)
                 @php
                     if ($post->page_views <= 30) 
                         $progressBar[] = "progress-bar bg-danger";

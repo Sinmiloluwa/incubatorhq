@@ -23,5 +23,6 @@
     <script src="https://kit.fontawesome.com/9b17fa5de8.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/vmzv4nnkpn49sq5biufvtap4alp3i0lsh8wwvtkgjzvq6h3y/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <x-head.tinymce-config/>
 </head>
