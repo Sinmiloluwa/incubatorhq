@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
+use App\Traits\ResponseTrait;
+use App\Http\Resources\PostResource;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
@@ -73,6 +74,7 @@ class CategoryController extends Controller
     {
         $category = Category::where('id', $id)->first();
         $posts = $category->posts;
+        $posts = PostResource::collection($posts);
         return $this->okResponse('Posts', $posts);
     }
 }
