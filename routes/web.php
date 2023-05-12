@@ -26,10 +26,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'the-universe'], function(){
     Route::get('/', [Controller::class, 'index'])->name('home');
     Route::get('posts', [PostController::class, 'index'])->name('posts.index');
     Route::post('create-new-posts', [PostController::class, 'store'])->name('posts.store');
-    Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
-    Route::get('category/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::get('category', [CategoryController::class, 'index'])->name('categories.index');
+    Route::post('category', [CategoryController::class, 'store'])->name('categories.store');
+    Route::get('categor/{id}', [CategoryController::class, 'edit'])->name('category.edit');
     Route::post('category/{id}', [CategoryController::class, 'update'])->name('category.update');
-    Route::delete('category/{id}', [CategoryController::class, 'destroy'])->name('category.delete');
+    Route::delete('category/{category}', [CategoryController::class, 'destroy'])->name('category.delete');
     Route::get('post/{id}', [PostController::class, 'edit'])->name('post.edit');
     Route::post('post/{post}', [PostController::class, 'update'])->name('post.update');
     Route::delete('post/{post}', [PostController::class, 'destroy'])->name('post.delete');
@@ -40,6 +41,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'the-universe'], function(){
     Route::post('restore-deleted/{post}', [PostController::class, 'restoreDeleted'])->name('post.restore');
     Route::post('upload', [PostController::class, 'upload'])->name('image.upload');
     Route::get('create-post', [PostController::class, 'create'])->name('posts.create');
+    Route::get('create-category', [CategoryController::class, 'create'])->name('category.create');
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::post('revoke-user/{user}', [UserController::class, 'revokeUser'])->name('user.revoke');
     Route::get('preview/{post}', [PostController::class, 'preview'])->name('display');

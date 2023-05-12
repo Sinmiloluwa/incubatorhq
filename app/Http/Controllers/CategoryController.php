@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -32,6 +34,30 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
-        dd($category);
+        $category->delete();
+
+        return Redirect::route('categories.index');
+    }
+
+    public function create()
+    {
+        return view('pages.categories.newCategory');
+    }
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'category' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withInput()->withErrors($validator->messages());
+        }
+
+        Category::create([
+            'categories' => $request->category
+        ]);
+
+        return Redirect::route('categories.index');
     }
 }
