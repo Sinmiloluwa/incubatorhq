@@ -3,13 +3,14 @@
 <script>
     tinymce.init({
         selector: 'textarea#myeditorinstance', // Replace this CSS selector to match the placeholder element for TinyMCE
-        plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+        plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak audio',
         toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table | media | image',
         images_upload_url: "{{ route('image.upload') }}",
         file_picker_types: 'image',
         relative_urls : false,
         remove_script_host : false,
         convert_urls : true,
+        forced_root_block: false,
         images_file_types: 'jpg,svg,webp,jpeg',
         file_picker_callback: function(cb, value, meta) {
             var input = document.createElement('input');

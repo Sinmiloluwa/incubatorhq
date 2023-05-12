@@ -45,8 +45,8 @@
             <label class="form-check-label" for="flexSwitchCheckChecked">Feature Post</label>
           </div>
         <div class="form-group py-3">
-        <button class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm" type="submit" name="draft">Drafts</button>
-        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" type="submit"> Preview</button>
+        <button class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm" type="submit" name="draft">Preview</button>
+        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" type="submit"> Publish</button>
         </div>
     </form>
         </div>
