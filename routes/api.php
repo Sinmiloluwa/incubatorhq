@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\PostController;
@@ -24,3 +25,4 @@ Route::get('posts', [PostController::class, 'index']);
 Route::get('recent-articles', [PostController::class, 'recentArticles']);
 Route::get('hero-featured-posts', [PostController::class, 'featurePostHero']);
 Route::get('all-featured-posts', [PostController::class, 'getAllFeaturedPosts']);
+Route::get('categories', [CategoryController::class, 'getCategories']);

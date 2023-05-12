@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
+    use ResponseTrait;
     public function index()
     {
         $categories = Category::all();
@@ -59,5 +61,11 @@ class CategoryController extends Controller
         ]);
 
         return Redirect::route('categories.index');
+    }
+
+    public function getCategories()
+    {
+        $categories = Category::get();
+        return $this->okResponse('Categories', $categories);
     }
 }
