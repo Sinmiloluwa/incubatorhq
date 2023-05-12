@@ -68,4 +68,11 @@ class CategoryController extends Controller
         $categories = Category::get();
         return $this->okResponse('Categories', $categories);
     }
+
+    public function categoryView($id)
+    {
+        $category = Category::where('id', $id)->first();
+        $posts = $category->posts;
+        return $this->okResponse('Posts', $posts);
+    }
 }
