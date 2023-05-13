@@ -22,7 +22,7 @@ class PostResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'published_at' => Carbon::parse($this->published_at)->format('d-m-Y'),
-            'content' => $this->content,
+            'content' => html_entity_decode($this->content),
             'category' => $this->category->categories,
             'featured_image' => config('services.env_url.url').'/storage/'.$this->featured_image_path
         ];
