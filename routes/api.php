@@ -27,3 +27,4 @@ Route::get('hero-featured-posts', [PostController::class, 'featurePostHero']);
 Route::get('all-featured-posts', [PostController::class, 'getAllFeaturedPosts']);
 Route::get('categories', [CategoryController::class, 'getCategories']);
 Route::get('category-posts/{id}', [CategoryController::class, 'categoryView']);
+Route::get('post/{id}', [PostController::class, 'show']);

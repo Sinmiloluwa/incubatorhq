@@ -33,7 +33,10 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $post = Post::where('id',$id)->firstOrFail();
+        $category_id = $post->category_id;
+        $related = $this->getRelatedArticles($category_id);
+        return $this->okResponse('Post view', ['post' => $post, 'related' => $related]);
     }
 
     /**
@@ -68,5 +71,11 @@ class PostController extends Controller
     {
         $featuredPosts = Post::where('feature', true)->orderBy('created_at', 'desc')->get();
         return PostResource::collection($featuredPosts);
+    }
+
+    public function getRelatedArticles($id)
+    {
+        $posts = Post::where('category_id', $id)->get();
+        return $posts;
     }
 }
