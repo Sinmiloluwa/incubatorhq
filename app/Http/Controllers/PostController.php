@@ -111,12 +111,12 @@ class PostController extends Controller
         }
 
         $post->update([
-            'categories' => $request->categories,
+            'category_id' => $request->category,
             'title' => $request->title,
-            'meta_tittle' => $request->meta_title,
+            'meta_title' => $request->meta_title,
             'slug' => $request->slug,
             'summary' => $request->summary,
-            'featured_image' => $image ?? $post->featured_image_path
+            'featured_image_path' => $image ? $image : $post->featured_image_path
         ]);
 
         return redirect()->route('posts.index')->with('success', 'Article has been updated');
