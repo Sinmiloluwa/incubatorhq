@@ -34,8 +34,10 @@ class PostController extends Controller
     public function show(string $id)
     {
         $post = Post::where('id',$id)->firstOrFail();
+        $post = new PostResource($post);
         $category_id = $post->category_id;
         $related = $this->getRelatedArticles($category_id);
+        $related = PostResource::collection($related);
         return $this->okResponse('Post view', ['post' => $post, 'related' => $related]);
     }
 
