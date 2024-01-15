@@ -1,4 +1,4 @@
-name: Deploy Incubator GitHub repository to cPanel
+name: Deploy Incubator GitHub repository to Hostinger
 on:
   push:
     branches:
