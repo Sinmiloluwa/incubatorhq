@@ -35,4 +35,11 @@ return [
         'url' => env('APP_URL'),
     ],
 
+    'contentful' => [
+        'space_id' => env('CONTENTFUL_SPACE_ID'),
+        'entry_id' => '5GyB2Pqyghg5UhKWyhJMvz',
+        'access_token' => env('CONTENTFUL_ACCESS_TOKEN'),
+        'base_uri' => 'https://cdn.contentful.com',
+    ],
+
 ];
