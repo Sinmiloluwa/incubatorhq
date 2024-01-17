@@ -15,16 +15,22 @@ class ContentController extends Controller
     {
        try {
         $response = Contentful::getAllEntries();
-        $value = $response ?? []; 
-        $data = [
-         'id' => $value['items'][0]['sys']['id'],
-         'title' => $value['items'][0]['fields']['storyTitle'],
-         'sub_heading' => $value['items'][0]['fields']['subHeading'],
-         'author' => $value['items'][0]['fields']['author'],
-         'body' => $value['items'][0]['fields']['body'],
-         'date' => $value['items'][0]['fields']['datePublished'],
-         'feature_image' => 'https:'.$value['includes']['Asset'][0]['fields']['file']['url'],
-        ];
+        $result = $response ?? []; 
+        $data = [];
+        foreach ($result['items'] as $key => $value) {
+            $entryData = [
+                'id' => $value['sys']['id'],
+                'title' => $value['fields']['storyTitle'],
+                'sub_heading' => $value['fields']['subHeading'],
+                'author' => $value['fields']['author'],
+                'body' => $value['fields']['body'],
+                'date' => $value['fields']['datePublished'],
+                'feature_image' => 'https:'.$result['includes']['Asset'][0]['fields']['file']['url'] ?? '',
+                'value_count' => count($value),
+               ];
+               
+            $data[] = $entryData;
+        }
         return $this->okResponse('All Enteries', $data);
        } catch (Exception $e) {
             return $this->badRequestResponse($e->getMessage());
