@@ -28,10 +28,10 @@ class ContentController extends Controller
                 'feature_image' => 'https:'.$result['includes']['Asset'][0]['fields']['file']['url'] ?? '',
                 'value_count' => count($value),
                ];
-               
+
             $data[] = $entryData;
         }
-        return $this->okResponse('All Enteries', $data);
+        return $this->okResponse('All Entries', $data);
        } catch (Exception $e) {
             return $this->badRequestResponse($e->getMessage());
        }
@@ -50,7 +50,7 @@ class ContentController extends Controller
                 'author' => $value['items'][0]['fields']['author'],
                 'body' => $value['items'][0]['fields']['body'],
                 'date' => $value['items'][0]['fields']['datePublished'],
-                'feature_image' => 'https:'.$value['includes']['Asset'][0]['fields']['file']['url'],
+                'feature_image' => 'https:'.$value['includes']['Asset'][0]['fields']['file']['url'] ?? '',
                ];
             return $this->okResponse('Entry', $data);
         } catch (Exception $e) {
