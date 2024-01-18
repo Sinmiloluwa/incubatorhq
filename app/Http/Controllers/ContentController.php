@@ -18,6 +18,16 @@ class ContentController extends Controller
         $result = $response ?? []; 
         $data = [];
         foreach ($result['items'] as $key => $value) {
+            $featureImageId = $value['fields']['featureImage']['sys']['id'];
+            $featureImage = null;
+            if ($featureImageId) {
+                $collection = collect($result['includes']['Asset']);
+                $collection->map( function ($record) use (&$featureImageId, &$featureImage) {
+                    if($featureImageId == $record['sys']['id']) {
+                        $featureImage = $record['fields']['file']['url'];
+                    }
+                });
+            }
             $entryData = [
                 'id' => $value['sys']['id'],
                 'title' => $value['fields']['storyTitle'],
@@ -25,8 +35,7 @@ class ContentController extends Controller
                 'author' => $value['fields']['author'],
                 'body' => $value['fields']['body'],
                 'date' => $value['fields']['datePublished'],
-                'feature_image' => 'https:'.$result['includes']['Asset'][0]['fields']['file']['url'] ?? '',
-                'value_count' => count($value),
+                'feature_image' => 'https:'.$featureImage ?? '',
                ];
 
             $data[] = $entryData;

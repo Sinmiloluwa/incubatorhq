@@ -56,6 +56,9 @@ Route::get('signup', [AuthController::class, 'index'])->name('admin.signup');
 Route::post('signup', [AuthController::class, 'signup'])->name('signup');
 Route::post('signin', [AuthController::class, 'login'])->name('admin.login');
 Route::get('signin', [AuthController::class, 'signin'])->name('signin');
+Route::get('test-view', function () {
+    return view('pages.posts.test');
+});
 
 Auth::routes();
 
